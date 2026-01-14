@@ -3,7 +3,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { useEffect, useState } from 'react';
 import { View } from 'react-native';
 import { Text } from '../../components/atoms/Text';
-import { Card } from '../../components/molecules/Card';
+import Dice3D from '../../components/objects/Dice3D';
 import { useAccelerometer } from '../../lib/modules/sensors/accelerometer/useAccelerometer';
 
 export default function DiceGame() {
@@ -40,32 +40,35 @@ export default function DiceGame() {
                 </Text>
             </View>
 
-            <Card className="w-11/12 items-center justify-center py-16 bg-white shadow-2xl">
-                <LinearGradient
-                    colors={['#3b82f6', '#8b5cf6']}
-                    start={{ x: 0, y: 0 }}
-                    end={{ x: 1, y: 1 }}
-                    className="w-40 h-40 rounded-3xl items-center justify-center shadow-xl mb-6"
-                >
-                    <Text className={isRolling ? 'text-8xl font-black text-white opacity-50' : 'text-8xl font-black text-white'}>
-                        {isRolling ? '?' : diceValue}
-                    </Text>
-                </LinearGradient>
+            <LinearGradient
+                colors={['#3b82f6', '#8b5cf6']}
+                start={{ x: 0, y: 0 }}
+                end={{ x: 1, y: 1 }}
+                className="w-11/12 items-center justify-center py-16 rounded-3xl shadow-2xl"
+                style={{
+                    shadowColor: '#000',
+                    shadowOffset: { width: 0, height: 6 },
+                    shadowOpacity: 0.4,
+                    shadowRadius: 10,
+                    elevation: 15,
+                }}
+            >
+                <View className="mb-6">
+                    <Dice3D value={diceValue} isRolling={isRolling} />
+                </View>
 
-                <Text variant="body" className="text-2xl font-semibold text-gray-800 mb-2">
+
+                <Text variant="body" className="text-2xl font-semibold text-white mb-2">
                     {isRolling ? 'Rolling...' : `You rolled ${diceValue}`}
                 </Text>
 
-                <View className="w-full h-1 bg-gray-200 rounded-full mt-4">
-                    <LinearGradient
-                        colors={['#3b82f6', '#8b5cf6']}
-                        start={{ x: 0, y: 0 }}
-                        end={{ x: 1, y: 0 }}
-                        className="h-full rounded-full"
+                <View className="w-full h-1 bg-white/30 rounded-full mt-4">
+                    <View
+                        className="h-full rounded-full bg-white"
                         style={{ width: `${(diceValue / 6) * 100}%` }}
                     />
                 </View>
-            </Card>
+            </LinearGradient>
 
             <View className="absolute bottom-10 left-0 right-0 items-center px-6">
                 <View className="w-full bg-white/20 rounded-xl p-4 border border-white/30">
